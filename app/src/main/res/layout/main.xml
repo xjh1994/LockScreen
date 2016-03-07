@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainFrame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparency" >
+
+    <com.xjh1994.lockscreen.view.PullDoorView
+        android:id="@+id/my_pulldoorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="100sp" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_time"
+            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingRight="4dp"
+                android:text="右滑解锁"
+                android:textColor="@android:color/white" />
+
+            <ImageView
+                android:id="@+id/iv_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/control_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bottom_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/ib_reduce"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/mass_reduce_img" />
+
+            <ImageButton
+                android:id="@+id/ib_stop"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/mass_stop_img" />
+
+            <ImageButton
+                android:id="@+id/ib_add"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/mass_add_img" />
+        </LinearLayout>
+
+    </com.xjh1994.lockscreen.view.PullDoorView>
+
+</FrameLayout>
