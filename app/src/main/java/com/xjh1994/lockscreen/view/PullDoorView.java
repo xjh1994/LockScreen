@@ -180,6 +180,7 @@ public class PullDoorView extends RelativeLayout {
 		} else {// 解锁成功
 			if (mCloseFlag) {
 				soundPool.play(musicId, 1, 1, 0, 0, 1);
+				mainHandler = new Handler();
 				mainHandler.obtainMessage(MainActivity.MSG_LOCK_SUCESS)
 						.sendToTarget();
 				this.setVisibility(View.GONE);
