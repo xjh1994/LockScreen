@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/transparency" >
 
-    <com.xjh1994.lockscreen.view.BaseketView
+    <com.xjh1994.lockscreen.view.LockView
         android:id="@+id/my_pulldoorView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -85,6 +85,6 @@
                 android:background="@drawable/mass_add_img" />
         </LinearLayout>
 
-    </com.xjh1994.lockscreen.view.BaseketView>
+    </com.xjh1994.lockscreen.view.LockView>
 
 </FrameLayout>

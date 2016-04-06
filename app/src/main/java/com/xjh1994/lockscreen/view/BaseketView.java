@@ -48,7 +48,7 @@ public class BaseketView extends RelativeLayout {
         wm.getDefaultDisplay().getMetrics(dm);
         mScreenWidth = dm.widthPixels;
         // 这里一定要设置成透明背景,不然会无法看到底层布局
-        this.setBackgroundColor(R.color.transparency);
+        this.setBackgroundColor(getResources().getColor(R.color.transparency));
 
 
     }
@@ -68,14 +68,14 @@ public class BaseketView extends RelativeLayout {
                 Log.d("startYACTION_DOWN", String.valueOf(startY));
 
                 count++;
-                if(count == 1){
+                if (count == 1) {
                     firClick = System.currentTimeMillis();
 
-                } else if (count == 2){
+                } else if (count == 2) {
                     secClick = System.currentTimeMillis();
-                    if(secClick - firClick < 1000){
+                    if (secClick - firClick < 1000) {
                         //双击事件
-//                        mainHandler = new Handler();
+                        mainHandler = ((MainActivity) context).mHandler;
                         mainHandler.obtainMessage(MainActivity.MSG_LOCK_SUCESS)
                                 .sendToTarget();
                         this.setVisibility(View.GONE);

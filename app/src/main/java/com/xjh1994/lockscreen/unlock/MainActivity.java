@@ -80,7 +80,7 @@ public class MainActivity extends Activity {
      * 消息处理
      */
     @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
+    public Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             if (MSG_LOCK_SUCESS == msg.what) {
                 lockLayer.unlock();
