@@ -5,14 +5,18 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xjh1994.lockscreen.R;
 import com.xjh1994.lockscreen.service.NsLockService;
@@ -26,7 +30,7 @@ import java.util.Date;
  *
  * @author zihao
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnTouchListener {
 
     private static String TAG = "MainActivity";
     private TextView tvTime, tvDate;// 显示日期的TextView
@@ -38,10 +42,15 @@ public class MainActivity extends Activity {
     private LockLayer lockLayer;
     private View lockView;
 
+    private int screenWidth;
+    private int screenHeight;
+    private int lastX, lastY;
+    private int startX, startY;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        lockView = View.inflate(this, R.layout.main, null);
+        lockView = View.inflate(this, R.layout.activity_main, null);
         lockLayer = new LockLayer(this);
         lockLayer.setLockView(lockView);// 设置要展示的页面
         lockLayer.lock();// 开启锁屏
@@ -74,7 +83,132 @@ public class MainActivity extends Activity {
         animArrowDrawable = (AnimationDrawable) ivHint.getDrawable();
         animArrowDrawable.start();
         getNewTime();
+
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        screenWidth = dm.widthPixels;
+        screenHeight = dm.heightPixels - 150;
+
+        tvTime.setOnTouchListener(this);
     }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Toast.makeText
+                        (MainActivity.this, "Down...", Toast.LENGTH_SHORT).show();
+                lastX = (int) event.getRawX();
+                lastY = (int) event.getRawY();
+                startX = (int) event.getRawX();
+                startY = (int) event.getRawY();
+//			System.out.println("lastX:"+lastX+",lastY:"+lastY);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                int dx = (int) event.getRawX() - lastX;
+                int dy = (int) event.getRawY() - lastY;
+
+                int left = v.getLeft() + dx;
+                int top = v.getTop() + dy;
+                int right = v.getRight() + dx;
+                int bottom = v.getBottom() + dy;
+
+                System.out.println("left:" + left);
+                System.out.println("top:" + top);
+                System.out.println("right:" + right);
+                System.out.println("bottom:" + bottom);
+
+                // 设置不能出界
+                if (left < 0) {
+                    left = 0;
+                    right = left + v.getWidth();
+                }
+
+                if (right > screenWidth) {
+                    right = screenWidth;
+                    left = right - v.getWidth();
+                }
+
+                if (top < 0) {
+                    top = 0;
+                    bottom = top + v.getHeight();
+                }
+
+                if (bottom > screenHeight) {
+                    bottom = screenHeight;
+                    top = bottom - v.getHeight();
+                }
+                v.layout(left, top, right, bottom);
+
+                lastX = (int) event.getRawX();
+                lastY = (int) event.getRawY();
+
+                break;
+            case MotionEvent.ACTION_UP:
+                if () {
+
+                } else {
+                    int l = v.getLeft() - dx;
+                    int t = v.getTop() - dy;
+                    int r = v.getRight() - dx;
+                    int b = v.getBottom() - dy;
+                    v.layout(l, t, r, b);
+                }
+                break;
+        }
+        return true;
+    }
+
+    public boolean isRectIntersect(Rect rect, Rect rect1) {
+        return ((rect.getLeftTopX() > rect1.getLeftTopX() && rect.getRightBottomX() > rect1.getLeftTopX()) ||
+                (rect.getLeftTopX() < rect1.getLeftTopX() && rect.getRightBottomX() < rect1.getLeftTopX()) ||
+                (rect.getLeftTopY() > rect1.getLeftTopY() && rect.getRightBottomY() > rect1.getLeftTopY()) ||
+                (rect.getLeftTopY() < rect1.getLeftTopY() && rect.getRightBottomY() < rect1.getLeftTopY()));
+    }
+
+    class Rect {
+        private float x1;
+        private float y1;
+        private float x2;
+        private float y2;
+
+        public Rect(float x1, float y1, float x2, float y2) {
+            // [Neo] 确保存储的点为 左上坐标(x1, y1) 以及 右下坐标(x2, y2)
+            float tmp;
+            if (x1 > x2) {
+                tmp = x1;
+                x1 = x2;
+                x2 = tmp;
+            }
+
+            if (y1 > y2) {
+                tmp = y1;
+                y1 = y2;
+                y2 = tmp;
+            }
+
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+        }
+
+        public float getLeftTopX() {
+            return x1;
+        }
+
+        public float getLeftTopY() {
+            return y1;
+        }
+
+        public float getRightBottomX() {
+            return x2;
+        }
+
+        public float getRightBottomY() {
+            return y2;
+        }
+    }
+
 
     /**
      * 消息处理
