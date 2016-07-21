@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -93,6 +92,12 @@ public class MainActivity extends Activity implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        int left = 0;
+        int top = 0;
+        int right = 0;
+        int bottom = 0;
+        int dx = 0;
+        int dy = 0;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 Toast.makeText
@@ -104,13 +109,13 @@ public class MainActivity extends Activity implements View.OnTouchListener {
 //			System.out.println("lastX:"+lastX+",lastY:"+lastY);
                 break;
             case MotionEvent.ACTION_MOVE:
-                int dx = (int) event.getRawX() - lastX;
-                int dy = (int) event.getRawY() - lastY;
+                dx = (int) event.getRawX() - lastX;
+                dy = (int) event.getRawY() - lastY;
 
-                int left = v.getLeft() + dx;
-                int top = v.getTop() + dy;
-                int right = v.getRight() + dx;
-                int bottom = v.getBottom() + dy;
+                left = v.getLeft() + dx;
+                top = v.getTop() + dy;
+                right = v.getRight() + dx;
+                bottom = v.getBottom() + dy;
 
                 System.out.println("left:" + left);
                 System.out.println("top:" + top);
@@ -144,8 +149,18 @@ public class MainActivity extends Activity implements View.OnTouchListener {
 
                 break;
             case MotionEvent.ACTION_UP:
-                if () {
+//                Rect rect = new Rect(left, top, right, bottom);
+//                Rect rect1 = new Rect(ivHint.getLeft(), ivHint.getTop(), ivHint.getRight(), ivHint.getBottom());
 
+                int[] location = new int[2];
+                tvTime.getLocationOnScreen(location);
+
+                int x = location[0];
+                int y = location[1];
+
+                if (x > tvDate.getLeft() && x < tvDate.getRight() && y > tvDate.getTop() && y < tvDate.getBottom()) {
+                    mHandler.obtainMessage(MSG_LOCK_SUCESS).sendToTarget();
+                    Toast.makeText(MainActivity.this, "yes", Toast.LENGTH_SHORT).show();
                 } else {
                     int l = v.getLeft() - dx;
                     int t = v.getTop() - dy;
@@ -153,9 +168,26 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                     int b = v.getBottom() - dy;
                     v.layout(l, t, r, b);
                 }
+
+                /*if (isRectIntersect(rect, rect1)) {
+                    mHandler.obtainMessage(MSG_LOCK_SUCESS).sendToTarget();
+                    Toast.makeText(MainActivity.this, "yes", Toast.LENGTH_SHORT).show();
+                } else {
+                    int l = v.getLeft() - dx;
+                    int t = v.getTop() - dy;
+                    int r = v.getRight() - dx;
+                    int b = v.getBottom() - dy;
+                    v.layout(l, t, r, b);
+                }*/
                 break;
         }
+
         return true;
+    }
+
+    int ab(int n) {
+        if (n >= 0) return n;
+        else return -n;
     }
 
     public boolean isRectIntersect(Rect rect, Rect rect1) {
@@ -207,6 +239,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         public float getRightBottomY() {
             return y2;
         }
+
     }
 
 
