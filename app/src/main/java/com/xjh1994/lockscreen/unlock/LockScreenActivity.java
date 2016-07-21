@@ -14,10 +14,10 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import com.xjh1994.lockscreen.R;
 import com.xjh1994.lockscreen.utils.DisplayUtils;
+import com.xjh1994.lockscreen.view.BaseketballView;
 
 import java.util.Date;
 
@@ -35,7 +35,7 @@ public class LockScreenActivity extends Activity {
     private boolean isTime = true;// 是否允许更新时间
     private Handler mainHandler;
     private float mStartX;
-    private ImageView mMoveView;
+    private BaseketballView mMoveView;
     private int mWidth;
 
     @Override
@@ -58,7 +58,7 @@ public class LockScreenActivity extends Activity {
     }
 
     private void initMoveView() {
-        mMoveView = (ImageView) findViewById(R.id.iv_image);
+        mMoveView = (BaseketballView) findViewById(R.id.basketballView);
     }
 
     private void initHandler() {
