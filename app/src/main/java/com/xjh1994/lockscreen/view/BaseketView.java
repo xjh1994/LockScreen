@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.xjh1994.lockscreen.R;
-import com.xjh1994.lockscreen.unlock.MainActivity;
+import com.xjh1994.lockscreen.unlock.LockScreenActivity;
 
 /**
  * Created by XJH on 16/3/7.
@@ -75,8 +75,8 @@ public class BaseketView extends RelativeLayout {
                     secClick = System.currentTimeMillis();
                     if (secClick - firClick < 1000) {
                         //双击事件
-                        mainHandler = ((MainActivity) context).mHandler;
-                        mainHandler.obtainMessage(MainActivity.MSG_LOCK_SUCESS)
+                        mainHandler = ((LockScreenActivity) context).mHandler;
+                        mainHandler.obtainMessage(LockScreenActivity.MSG_LOCK_SUCESS)
                                 .sendToTarget();
                         this.setVisibility(View.GONE);
                     }

@@ -20,7 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
 import com.xjh1994.lockscreen.R;
-import com.xjh1994.lockscreen.unlock.MainActivity;
+import com.xjh1994.lockscreen.unlock.LockScreenActivity;
 
 /**
  * 锁屏界面
@@ -181,7 +181,7 @@ public class PullDoorView extends RelativeLayout {
 			if (mCloseFlag) {
 				soundPool.play(musicId, 1, 1, 0, 0, 1);
 				mainHandler = new Handler();
-				mainHandler.obtainMessage(MainActivity.MSG_LOCK_SUCESS)
+				mainHandler.obtainMessage(LockScreenActivity.MSG_LOCK_SUCESS)
 						.sendToTarget();
 				this.setVisibility(View.GONE);
 			}

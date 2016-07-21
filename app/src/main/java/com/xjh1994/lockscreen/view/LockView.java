@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.xjh1994.lockscreen.R;
-import com.xjh1994.lockscreen.unlock.MainActivity;
+import com.xjh1994.lockscreen.unlock.LockScreenActivity;
 
 /**
  * Created by xjh1994 on 2016/4/6.
@@ -57,8 +57,8 @@ public class LockView extends RelativeLayout {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mainHandler = ((MainActivity) context).mHandler;
-                mainHandler.obtainMessage(MainActivity.MSG_LOCK_SUCESS)
+                mainHandler = ((LockScreenActivity) context).mHandler;
+                mainHandler.obtainMessage(LockScreenActivity.MSG_LOCK_SUCESS)
                         .sendToTarget();
                 this.setVisibility(View.GONE);
                 break;
