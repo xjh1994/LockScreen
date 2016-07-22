@@ -4,19 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
+    <com.xjh1994.lockscreen.view.MatrixImageView
         android:id="@+id/iv_basketball"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
-        android:src="@drawable/ic_basketball" />
+        android:src="@drawable/ic_ball" />
 
-    <ImageView
+    <com.xjh1994.lockscreen.view.MatrixImageView
         android:id="@+id/iv_basket"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_above="@id/iv_basketball"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"

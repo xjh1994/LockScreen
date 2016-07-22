@@ -15,9 +15,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.xjh1994.lockscreen.Event.FinishEvent;
 import com.xjh1994.lockscreen.R;
 import com.xjh1994.lockscreen.utils.DisplayUtils;
 import com.xjh1994.lockscreen.view.BaseketballView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Date;
 
@@ -46,6 +50,7 @@ public class LockScreenActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
         setContentView(R.layout.activity_lockscreen);
+        EventBus.getDefault().register(this);
 
         initView();
         initWidth();
@@ -80,6 +85,11 @@ public class LockScreenActivity extends Activity {
      */
     private void initView() {
 
+    }
+
+    @Subscribe
+    public void onEvent(FinishEvent finishEvent) {
+        finish();
     }
 
     @Override
@@ -212,10 +222,12 @@ public class LockScreenActivity extends Activity {
         isTime = false;
     }
 
-    protected void onDestory() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
         Log.i(TAG, "onDestory");
         isTime = false;
+        EventBus.getDefault().unregister(this);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
